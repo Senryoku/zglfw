@@ -581,6 +581,7 @@ pub fn getVideoMode(monitor: *Monitor) Error!*VideoMode {
         return video_mode;
     }
     try maybeError();
+    unreachable;
 }
 extern fn glfwGetVideoMode(*Monitor) ?*VideoMode;
 
