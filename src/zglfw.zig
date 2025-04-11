@@ -88,11 +88,11 @@ extern fn glfwGetRequiredInstanceExtensions(count: *u32) ?*?[*:0]const u8;
 
 /// `pub fn getTime() f64`
 pub const getTime = glfwGetTime;
-extern fn glfwGetTime() f64;
+extern fn glfwGetTime() callconv(.c) f64;
 
 /// `pub fn setTime(time: f64) void`
 pub const setTime = glfwSetTime;
-extern fn glfwSetTime(time: f64) void;
+extern fn glfwSetTime(time: f64) callconv(.c) void;
 
 pub const ErrorCode = c_int;
 
@@ -1136,50 +1136,50 @@ pub const ContextCreationApi = enum(c_int) {
 //
 //--------------------------------------------------------------------------------------------------
 pub const getWin32Adapter = if (builtin.target.os.tag == .windows) glfwGetWin32Adapter else _getWin32Adapter;
-extern fn glfwGetWin32Adapter(*Monitor) ?[*:0]const u8;
-fn _getWin32Adapter(_: *Monitor) ?[*:0]const u8 {
+extern fn glfwGetWin32Adapter(*Monitor) callconv(.c) ?[*:0]const u8;
+fn _getWin32Adapter(_: *Monitor) callconv(.c) ?[*:0]const u8 {
     return null;
 }
 
 pub const getWin32Window = if (builtin.target.os.tag == .windows) glfwGetWin32Window else _getWin32Window;
-extern fn glfwGetWin32Window(*Window) ?std.os.windows.HWND;
-fn _getWin32Window(_: *Window) ?std.os.windows.HWND {
+extern fn glfwGetWin32Window(*Window) callconv(.c) ?std.os.windows.HWND;
+fn _getWin32Window(_: *Window) callconv(.c) ?std.os.windows.HWND {
     return null;
 }
 
 pub const getX11Adapter = if (_isLinuxDesktopLike() and options.enable_x11) glfwGetX11Adapter else _getX11Adapter;
-extern fn glfwGetX11Adapter(*Monitor) u32;
-fn _getX11Adapter(_: *Monitor) u32 {
+extern fn glfwGetX11Adapter(*Monitor) callconv(.c) u32;
+fn _getX11Adapter(_: *Monitor) callconv(.c) u32 {
     return 0;
 }
 
 pub const getX11Display = if (_isLinuxDesktopLike() and options.enable_x11) glfwGetX11Display else _getX11Display;
-extern fn glfwGetX11Display() ?*anyopaque;
-fn _getX11Display() ?*anyopaque {
+extern fn glfwGetX11Display() callconv(.c) ?*anyopaque;
+fn _getX11Display() callconv(.c) ?*anyopaque {
     return null;
 }
 
 pub const getX11Window = if (_isLinuxDesktopLike() and options.enable_x11) glfwGetX11Window else _getX11Window;
-extern fn glfwGetX11Window(window: *Window) u32;
-fn _getX11Window(_: *Window) u32 {
+extern fn glfwGetX11Window(window: *Window) callconv(.c) u32;
+fn _getX11Window(_: *Window) callconv(.c) u32 {
     return 0;
 }
 
 pub const getWaylandDisplay = if (_isLinuxDesktopLike() and options.enable_wayland) glfwGetWaylandDisplay else _getWaylandDisplay;
-extern fn glfwGetWaylandDisplay() ?*anyopaque;
-fn _getWaylandDisplay() ?*anyopaque {
+extern fn glfwGetWaylandDisplay() callconv(.c) ?*anyopaque;
+fn _getWaylandDisplay() callconv(.c) ?*anyopaque {
     return null;
 }
 
 pub const getWaylandWindow = if (_isLinuxDesktopLike() and options.enable_wayland) glfwGetWaylandWindow else _getWaylandWindow;
-extern fn glfwGetWaylandWindow(window: *Window) ?*anyopaque;
-fn _getWaylandWindow(_: *Window) ?*anyopaque {
+extern fn glfwGetWaylandWindow(window: *Window) callconv(.c) ?*anyopaque;
+fn _getWaylandWindow(_: *Window) callconv(.c) ?*anyopaque {
     return null;
 }
 
 pub const getCocoaWindow = if (builtin.target.os.tag == .macos) glfwGetCocoaWindow else _getCocoaWindow;
-extern fn glfwGetCocoaWindow(window: *Window) ?*anyopaque;
-fn _getCocoaWindow(_: *Window) ?*anyopaque {
+extern fn glfwGetCocoaWindow(window: *Window) callconv(.c) ?*anyopaque;
+fn _getCocoaWindow(_: *Window) callconv(.c) ?*anyopaque {
     return null;
 }
 
