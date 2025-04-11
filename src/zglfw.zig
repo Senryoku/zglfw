@@ -88,11 +88,11 @@ extern fn glfwGetRequiredInstanceExtensions(count: *u32) ?*?[*:0]const u8;
 
 /// `pub fn getTime() f64`
 pub const getTime = glfwGetTime;
-extern fn glfwGetTime() callconv(.c) f64;
+extern fn glfwGetTime() f64;
 
 /// `pub fn setTime(time: f64) void`
 pub const setTime = glfwSetTime;
-extern fn glfwSetTime(time: f64) callconv(.c) void;
+extern fn glfwSetTime(time: f64) void;
 
 pub const ErrorCode = c_int;
 
