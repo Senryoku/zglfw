@@ -480,6 +480,7 @@ pub const Joystick = enum(c_int) {
     pub const getButtons = getJoystickButtons;
     pub const isGamepad = joystickIsGamepad;
     pub const asGamepad = joystickAsGamepad;
+    pub const setRumble = setJoystickRumble;
 };
 
 pub fn joystickPresent(joystick: Joystick) bool {
@@ -524,6 +525,11 @@ extern fn glfwJoystickIsGamepad(Joystick) Bool;
 pub fn joystickAsGamepad(joystick: Joystick) ?Gamepad {
     return if (joystickIsGamepad(joystick)) @enumFromInt(@intFromEnum(joystick)) else null;
 }
+
+pub fn setJoystickRumble(joystick: Joystick, slowMotorIntensity: f32, fastMotorIntensity: f32) bool {
+    return glfwSetJoystickRumble(joystick, slowMotorIntensity, fastMotorIntensity) == TRUE;
+}
+extern fn glfwSetJoystickRumble(Joystick, slowMotorIntensity: f32, fastMotorIntensity: f32) Bool;
 
 //--------------------------------------------------------------------------------------------------
 //
