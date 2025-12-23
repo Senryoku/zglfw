@@ -52,6 +52,7 @@ typedef struct _GLFWlibraryLinux
     regex_t                 regex;
     GLFWbool                regexCompiled;
     GLFWbool                dropped;
+    struct ff_effect*       rumble;
 } _GLFWlibraryLinux;
 
 void _glfwDetectJoystickConnectionLinux(void);

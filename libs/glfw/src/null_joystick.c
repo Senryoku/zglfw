@@ -53,4 +53,3 @@ const char* _glfwGetMappingNameNull(void)
 void _glfwUpdateGamepadGUIDNull(char* guid)
 {
 }
-
