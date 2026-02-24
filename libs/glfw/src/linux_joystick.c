@@ -125,6 +125,7 @@ static void pollAbsState(_GLFWjoystick* js)
 static void initJoystickForceFeedback(_GLFWjoystickLinux *linjs)
 {
     linjs->rumble = NULL;
+    linjs->lastRumbleTime = 0;
     struct ff_effect* effect = NULL;
 
     char ffBits[(FF_CNT + 7) / 8] = {0};
@@ -478,18 +479,45 @@ void _glfwUpdateGamepadGUIDLinux(char* guid)
 {
 }
 
+#define RUMBLE_MIN_INTERVAL 0.030f
 int _glfwPlatformSetJoystickRumble(_GLFWjoystick* js, float slowMotorIntensity, float fastMotorIntensity)
 {
     _GLFWjoystickLinux *linjs = &js->linjs;
 
     if (!js->linjs.rumble)
         return GLFW_FALSE;
+    
+    float slow = fminf(fmaxf(slowMotorIntensity, 0.f), 1.f);
+    float fast = fminf(fmaxf(fastMotorIntensity, 0.f), 1.f);
 
-    js->linjs.rumble->u.rumble = (struct ff_rumble_effect)
-    {
-        .strong_magnitude = 65535 * slowMotorIntensity,
-        .weak_magnitude   = 65535 * fastMotorIntensity
+    unsigned short strongMag = (unsigned short)(65535 * slow);
+    unsigned short weakMag   = (unsigned short)(65535 * fast);
+
+    if (js->linjs.rumble->u.rumble.strong_magnitude == strongMag && js->linjs.rumble->u.rumble.weak_magnitude == weakMag)
+        return GLFW_TRUE;
+
+    js->linjs.rumble->u.rumble = (struct ff_rumble_effect) {
+        .strong_magnitude = strongMag,
+        .weak_magnitude   = weakMag
     };
+
+    if (strongMag == 0 && weakMag == 0)
+    {
+        struct input_event stop = {
+            .type = EV_FF,
+            .code = linjs->rumble->id,
+            .value = 0
+        };
+        if (write(linjs->fd, &stop, sizeof(stop)) < 0)
+            return GLFW_FALSE;
+        return GLFW_TRUE;
+    }
+
+    // Throttle updates: Too many events can cause the joystick to disconnect.
+    double currentTime = glfwGetTime();
+    if (currentTime - linjs->lastRumbleTime < RUMBLE_MIN_INTERVAL)
+        return GLFW_TRUE;
+    linjs->lastRumbleTime = currentTime;
 
     struct input_event play =
     {
