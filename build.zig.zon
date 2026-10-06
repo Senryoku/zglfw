@@ -20,5 +20,9 @@
             .url = "git+https://codeberg.org/ziglang/translate-c#875969d3493e245e01bf5d7860f792d8f3eb9ef5",
             .hash = "translate_c-0.0.0-Q_BUWoFOBwAhz77Zd15HCVuhTKzdUKc94kezmCeJ7IC_",
         },
+        .zgpu = .{
+            .url = "git+https://github.com/Senryoku/zgpu#801b47a8ac6f77b2566f9a72c8c2953db452af93",
+            .hash = "zgpu-0.17.0-dev-nqFT5A1IzAUWIeXIwCcPnqpW5ZZBiirVkLHtDSVmMvg-",
+        },
     },
 }
