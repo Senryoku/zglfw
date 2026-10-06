@@ -21,8 +21,8 @@
             .hash = "translate_c-0.0.0-Q_BUWoFOBwAhz77Zd15HCVuhTKzdUKc94kezmCeJ7IC_",
         },
         .zgpu = .{
-            .url = "git+https://github.com/Senryoku/zgpu#801b47a8ac6f77b2566f9a72c8c2953db452af93",
-            .hash = "zgpu-0.17.0-dev-nqFT5A1IzAUWIeXIwCcPnqpW5ZZBiirVkLHtDSVmMvg-",
+            .url = "git+https://github.com/Senryoku/zgpu#47230a348cf24d6c3f1eb92aaa80b1687e9d7d3a",
+            .hash = "zgpu-0.17.0-dev-nqFT5BpIzAXEWlQtpawvgQkPwEwPu-UP299ESIKuaL-B",
         },
     },
 }
